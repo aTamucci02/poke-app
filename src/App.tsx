@@ -29,7 +29,6 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstarts a global reset + sensible defaults */}
       <CssBaseline />
       <BrowserRouter>
         <NavBar />
