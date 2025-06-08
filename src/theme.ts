@@ -1,5 +1,5 @@
-// src/theme.ts
 import { createTheme } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 export const theme = createTheme({
   palette: {
@@ -9,8 +9,13 @@ export const theme = createTheme({
     secondary: {
       main: "#dc004e",
     },
-    background: {
-      default: "#f5f5f5",
+      background: {
+      default: grey[900],
+      paper: grey[800],
+    },
+    text: {
+      primary: "#fafafa",
+      secondary: grey[500],
     },
   },
   typography: {
@@ -22,10 +27,9 @@ export const theme = createTheme({
     },
   },
   components: {
-    // you can override default props/styles globally here
     MuiButton: {
       defaultProps: {
-        size: "medium",
+        size: "small",
       },
     },
   },
