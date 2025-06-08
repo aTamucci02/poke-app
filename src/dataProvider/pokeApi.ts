@@ -1,4 +1,3 @@
-// src/dataProvider/pokeApi.ts
 import type {
   DataProvider,
   BaseRecord,
@@ -6,7 +5,6 @@ import type {
   GetListResponse,
   GetOneParams,
   GetOneResponse,
-  GetManyParams,
   GetManyResponse,
 } from "@refinedev/core";
 
@@ -18,7 +16,6 @@ interface PokeItem {
 }
 
 export const pokeApiDataProvider: DataProvider = {
-  // must be zero‐arg, returning your base API URL
   getApiUrl(): string {
     return BASE_URL;
   },
@@ -61,7 +58,6 @@ export const pokeApiDataProvider: DataProvider = {
   },
 
   getMany: async <TData extends BaseRecord = BaseRecord>(
-    _params: GetManyParams,
   ): Promise<GetManyResponse<TData>> => ({
     data: [] as unknown as TData[],
   }),

@@ -4,3 +4,8 @@ export function sanitizeEntry(entry: string, pokemonName: string): string {
   const pattern = new RegExp(pokemonName, "gi");
   return entry.replace(pattern, asterisks);
 }
+
+export const sanitizeName = (name: string) => {
+  const noDash = name.replace(/-/g, " ");
+  return noDash.charAt(0).toUpperCase() + noDash.slice(1);
+};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Box,
   TextField,
@@ -6,8 +6,11 @@ import {
   Typography,
   Card,
   CardContent,
+  Autocomplete,
 } from "@mui/material";
 import { useDataProvider } from "@refinedev/core";
+import names from "../data/pokemon-names.json";
+import { sanitizeName } from "../utils/SanitizeEntry";
 
 interface Pokemon {
   id: string;
@@ -17,20 +20,23 @@ interface Pokemon {
 }
 
 const Home: React.FC = () => {
-  const [query, setQuery] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // ← call the getter to obtain the real provider
   const dataProvider = useDataProvider()();
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
+  const options = useMemo(() => {
+    const term = inputValue.trim().toLowerCase();
+    if (!term) return names;
+    return names.filter((n: string) => n.toLowerCase().includes(term));
+  }, [inputValue]);
 
+  const handleSearch = async (name: string) => {
     try {
       const { data } = await dataProvider.getOne<Pokemon>({
         resource: "pokemon",
-        id: query.toLowerCase(),
+        id: name.toLowerCase(),
       });
       setPokemon(data);
       setError(null);
@@ -47,13 +53,29 @@ const Home: React.FC = () => {
       </Typography>
 
       <Box display="flex" gap={2} justifyContent="center" mb={4}>
-        <TextField
-          label="Name or ID"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        <Autocomplete
+          freeSolo
+          disableClearable
+          options={options}
+          inputValue={inputValue}
+          onInputChange={(_, v) => setInputValue(v)}
+          onChange={(_, v) => v && handleSearch(v)}
+          getOptionLabel={(option) => sanitizeName(option)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search Pokémon"
+              sx={{ minWidth: 240 }}
+            />
+          )}
+          sx={{ flex: 1 }}
         />
-        <Button variant="contained" onClick={handleSearch}>
+
+        <Button
+          variant="contained"
+          onClick={() => handleSearch(inputValue)}
+          disabled={!inputValue}
+        >
           Search
         </Button>
       </Box>
