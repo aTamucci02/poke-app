@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 
 const TRANSLATE_ENDPOINT = 'https://translation.googleapis.com/language/translate/v2';
 type LangCode = string;
-// const BASE_CHAIN: LangCode[] = [
-//   'ja', 'ar', 'zh-CN', 'fi', 'tr', 'eu', 'sw', 'hi', 'ko',
-//   'el', 'he', 'vi', 'th', 'am', 'mi', 'is', 'hu', 'zu', 'cs', 'en'
-// ];
-// const CHAIN_LANGS: LangCode[] = [...BASE_CHAIN, ...BASE_CHAIN];
-
 const BASE_CHAIN: LangCode[] = [
-  'ja', 'sw', 'en'
+  'ja', 'ar', 'zh-CN', 'fi', 'tr', 'eu', 'sw', 'hi', 'ko',
+  'el', 'he', 'vi', 'th', 'am', 'mi', 'is', 'hu', 'zu', 'cs', 'en'
 ];
-const CHAIN_LANGS: LangCode[] = [...BASE_CHAIN];
+const CHAIN_LANGS: LangCode[] = [...BASE_CHAIN, ...BASE_CHAIN];
+
+// const BASE_CHAIN: LangCode[] = [
+//   'ja', 'sw', 'en'
+// ];
+// const CHAIN_LANGS: LangCode[] = [...BASE_CHAIN];
 
 export function useGoogleTranslate(entry: string) {
   const [result, setResult] = useState<string>('');
