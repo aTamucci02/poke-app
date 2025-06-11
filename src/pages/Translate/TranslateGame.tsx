@@ -48,7 +48,9 @@ const TranslateGame: React.FC<TranslateGameProps> = ({
   const [guess, setGuess] = useState<string>("");
   const [feedback, setFeedback] = useState<string>("");
   const [loadingData, setLoadingData] = useState<boolean>(true);
-  const [pokemonDetail, setPokemonDetail] = useState<PokemonDetail | null>(null);
+  const [pokemonDetail, setPokemonDetail] = useState<PokemonDetail | null>(
+    null
+  );
 
   const loadPokemon = useCallback(async () => {
     setLoadingData(true);
@@ -173,10 +175,16 @@ const TranslateGame: React.FC<TranslateGameProps> = ({
             {feedback}
           </Typography>
 
+          {/* show the initial entry */}
+          <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+            Initial entry: {initialText}
+          </Typography>
+
           {/* Show Pokémon details only if the guess was correct */}
           {feedback.startsWith("🎉") && pokemonDetail && (
             <Card sx={{ mt: 2, p: 2, textAlign: "center" }}>
-              <Box component="img"
+              <Box
+                component="img"
                 src={pokemonDetail.sprites.front_default || ""}
                 alt={pokemonDetail.name}
                 sx={{ width: 120, height: 120, mb: 1 }}
